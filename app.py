@@ -2,14 +2,16 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import google.generativeai as genai
 import logging
+import re
 
 app = Flask(__name__, static_folder="static")
 CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
-genai.configure(api_key="AIzaSyAmmMFrrGzfCkgAnJogp5K2sSbIuWFX5JM")
-model = genai.GenerativeModel("gemini-2.0-flash")
+# Use a stable model name
+genai.configure(api_key="AIzaSyCbypqy7FtG-YhgUTNXm7HEs4CR9rIVzy0")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 knowledge_base = {
     "planning": {
@@ -20,7 +22,8 @@ knowledge_base = {
 }
 
 currency_symbols = {
-    "$": "USD", "usd": "USD", "inr": "INR", "₹": "INR", "€": "EUR", "eur": "EUR", "£": "GBP", "gbp": "GBP"
+    "$": "USD", "usd": "USD", "inr": "INR", "₹": "INR",
+    "€": "EUR", "eur": "EUR", "£": "GBP", "gbp": "GBP"
 }
 
 def detect_currency(text):
@@ -38,43 +41,49 @@ def convert_budget(guest_count, currency):
     converted_high = int(base_high * rate)
     return f"{converted_low:,} - {converted_high:,} {currency.upper()}"
 
-def get_response(query):
-    query = query.lower().strip()
+def get_response(query, history=None):
+    query_lower = query.lower().strip()
 
-    if any(greet in query for greet in ["hi", "hello", "how are you", "hey"]):
+    # Rule-based overrides
+    if any(greet in query_lower for greet in ["hi", "hello", "how are you", "hey"]):
         return "Hey there! I'm here to help you with event planning. What would you like to know?"
 
     guest_count = 0
-    guest_match = re.search(r"(\d+)\s*(guests|people|attendees)?", query)
+    guest_match = re.search(r"(\d+)\s*(guests|people|attendees)?", query_lower)
     if guest_match:
         guest_count = int(guest_match.group(1))
 
-    currency = detect_currency(query)
+    currency = detect_currency(query_lower)
 
-    if "budget" in query or "cost" in query:
+    if "budget" in query_lower or "cost" in query_lower:
         if guest_count:
             return f"For {guest_count} guests, your estimated budget is {convert_budget(guest_count, currency)}."
-        else:
-            return "Please tell me how many guests you’re expecting, and I’ll provide a budget estimate!"
+        return "Please tell me how many guests you're expecting, and I'll provide a budget estimate!"
 
-    if "timeline" in query:
+    if "timeline" in query_lower:
         return "For a small event, plan 1-3 months ahead. For a large one, 6-12 months is ideal."
 
-    if "staff" in query:
+    if "staff" in query_lower:
         if guest_count:
             low = guest_count // knowledge_base["staff_ratio"]["low"]
             high = guest_count // knowledge_base["staff_ratio"]["high"]
             return f"For {guest_count} guests, you'll need approximately {low}-{high} staff members."
-        else:
-            return "Typically, you need 1 staff member for every 10-15 guests."
+        return "Typically, you need 1 staff member for every 10-15 guests."
 
-    prompt = f"You are an event assistant. Answer concisely: {query}"
+    # Gemini Fallback
     try:
-        response = model.generate_content([prompt])
+        # Construct chat session
+        chat = model.start_chat(history=[])
+        if history:
+            for msg in history:
+                role = "user" if msg["sender"] == "user" else "model"
+                chat.history.append({"role": role, "parts": [msg['message']]})
+        
+        response = chat.send_message(query)
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error generating response: {e}")
-        return "I'm sorry, but I couldn't process your request at the moment. Please try again later."
+        return "I'm having trouble connecting to my planning brain. Please try again in a moment."
 
 @app.route("/")
 def index():
@@ -86,19 +95,11 @@ def chat():
     history = data.get("history", [])
     query = data.get("query", "")
 
-    # Construct context-aware prompt
-    context = ""
-    for msg in history:
-        role = "User" if msg["sender"] == "user" else "Bot"
-        context += f"{role}: {msg['message']}\n"
+    if not query:
+        return jsonify({"response": "Please ask me something!"})
 
-    prompt = f"{context}User: {query}\nBot:"
+    reply = get_response(query, history)
+    return jsonify({"response": reply})
 
-    try:
-        response = model.generate_content(prompt)
-        reply = response.text.strip()
-        return jsonify({"response": reply})
-    except Exception as e:
-        return jsonify({"response": "Sorry, I couldn't process that."})
 if __name__ == "__main__":
     app.run(debug=True)

@@ -28,18 +28,22 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      background: var(--dark-bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(58, 134, 255, 0.22), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(58, 134, 255, 0.12), transparent 55%),
+        var(--dark-bg);
       color: var(--text-primary);
       height: 100vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      color-scheme: dark;
     }
 
     #top-bar {
-      background: var(--dark-card);
-      padding: 15px 20px;
+      background: rgba(37, 37, 37, 0.85);
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border-color);
       position: fixed;
       top: 0;
@@ -48,6 +52,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(10px);
     }
 
     .logo-container {
@@ -59,51 +64,65 @@
     .logo {
       width: 30px;
       height: 30px;
-      background-color: var(--primary-color);
       border-radius: 50%;
+      background:
+        radial-gradient(12px 12px at 35% 35%, rgba(255, 255, 255, 0.7), transparent 60%),
+        linear-gradient(135deg, rgba(58, 134, 255, 1), rgba(58, 134, 255, 0.65));
+      border: 1px solid rgba(255, 255, 255, 0.10);
     }
 
     h2 {
       margin: 0;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin-top: 2px;
+      font-size: 12px;
+      color: rgba(224, 224, 224, 0.75);
     }
 
     #settings-btn {
       background: transparent;
       border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
+      color: rgba(224, 224, 224, 0.85);
+      cursor: default;
       padding: 8px;
-      border-radius: 50%;
+      border-radius: 10px;
       transition: background-color var(--transition-speed);
+      opacity: 0.7;
     }
 
     #settings-btn:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.06);
     }
 
     #chat-container {
       flex: 1;
-      margin: 70px auto 85px auto;
-      max-width: 900px;
+      margin: 72px auto 96px auto;
+      max-width: 920px;
       width: 100%;
       overflow-y: auto;
-      padding: 0 20px;
+      padding: 0 16px;
       scroll-behavior: smooth;
     }
 
     #chat-messages {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      padding-bottom: 10px;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid rgba(51, 51, 51, 0.9);
+      border-radius: 16px;
+      background: rgba(30, 30, 30, 0.72);
     }
 
     .message-wrapper {
       display: flex;
       gap: 12px;
-      max-width: 90%;
+      max-width: min(78%, 680px);
     }
 
     .bot-wrapper {
@@ -115,15 +134,24 @@
       flex-direction: row-reverse;
     }
 
+    .message-column {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
     .avatar {
       width: 36px;
       height: 36px;
-      border-radius: 50%;
+      border-radius: 12px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .bot-avatar {
@@ -137,30 +165,41 @@
     }
 
     .message {
-      padding: 12px 18px;
-      border-radius: 18px;
-      font-size: 16px;
-      animation: fadeIn 0.3s ease;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 15px;
+      animation: fadeIn 0.25s ease;
       max-width: 100%;
       line-height: 1.5;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      word-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .user-message {
-      background: var(--user-message-bg);
-      border-top-right-radius: 4px;
+      background: linear-gradient(135deg, rgba(58, 134, 255, 1), rgba(58, 134, 255, 0.78));
+      border-top-right-radius: 6px;
     }
 
     .bot-message {
-      background: var(--bot-message-bg);
+      background: rgba(42, 45, 62, 0.95);
       color: var(--bot-text);
-      border-top-left-radius: 4px;
+      border-top-left-radius: 6px;
     }
 
     .timestamp {
       font-size: 12px;
-      color: #888;
-      margin-top: 4px;
+      color: rgba(224, 224, 224, 0.55);
+    }
+
+    .bot-wrapper .timestamp {
+      text-align: left;
+      padding-left: 2px;
+    }
+
+    .user-wrapper .timestamp {
       text-align: right;
+      padding-right: 2px;
     }
 
     #input-area {
@@ -170,14 +209,14 @@
       right: 0;
       display: flex;
       justify-content: center;
-      padding: 20px;
-      border-top: 1px solid var(--border-color);
-      background: var(--dark-surface);
+      padding: 14px 16px;
+      border-top: 1px solid rgba(51, 51, 51, 0.9);
+      background: rgba(30, 30, 30, 0.85);
       backdrop-filter: blur(10px);
     }
 
     #input-container {
-      max-width: 900px;
+      max-width: 920px;
       display: flex;
       width: 100%;
       gap: 10px;
@@ -191,44 +230,53 @@
 
     #user-input {
       width: 100%;
-      padding: 16px 12px;
-      padding-right: 40px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      background: var(--dark-card);
+      padding: 14px 44px 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(51, 51, 51, 0.95);
+      background: rgba(37, 37, 37, 0.95);
       color: white;
-      font-size: 16px;
-      transition: border-color var(--transition-speed);
+      font-size: 15px;
+      transition: border-color var(--transition-speed), background-color var(--transition-speed);
     }
 
     #user-input:focus {
       outline: none;
-      border-color: var(--primary-color);
+      border-color: rgba(58, 134, 255, 0.9);
+      background: rgba(37, 37, 37, 1);
+    }
+
+    #user-input::placeholder {
+      color: rgba(224, 224, 224, 0.55);
     }
 
     .btn {
       padding: 12px;
       background: transparent;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       color: white;
       cursor: pointer;
-      transition: background-color var(--transition-speed);
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid rgba(58, 134, 255, 0.7);
+      outline-offset: 2px;
     }
 
     .btn-primary {
       background: var(--primary-color);
-    }
-
-    .btn-primary:hover {
-      background: #2a75ff;
     }
 
     #send-btn {
@@ -248,13 +296,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.06);
       transition: background-color var(--transition-speed);
     }
 
     #start-over-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.10);
     }
 
     .typing-indicator {
@@ -306,22 +354,33 @@
     }
 
     .suggestion-chip {
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      font-size: 14px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      font-size: 13px;
       cursor: pointer;
-      transition: background-color var(--transition-speed);
-      border: 1px solid var(--border-color);
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
+      border: 1px solid rgba(51, 51, 51, 0.95);
+      user-select: none;
     }
 
     .suggestion-chip:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(58, 134, 255, 0.35);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
 
     @media (max-width: 768px) {
       #chat-container {
-        margin-bottom: 80px;
+        margin-bottom: 88px;
       }
       
       .message-wrapper {
@@ -338,9 +397,12 @@
   <div id="top-bar">
     <div class="logo-container">
       <div class="logo"></div>
-      <h2>EventBot</h2>
+      <div>
+        <h2>EventBot</h2>
+        <div class="subtitle">Plan smarter, faster</div>
+      </div>
     </div>
-    <button id="settings-btn">
+    <button id="settings-btn" aria-label="Settings" title="Settings (coming soon)" type="button">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"></circle>
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -357,8 +419,8 @@
   <div id="input-area">
     <div id="input-container">
       <div class="input-wrapper">
-        <input type="text" id="user-input" placeholder="Ask about events..." />
-        <button id="send-btn" class="btn" onclick="sendMessage()">
+        <input type="text" id="user-input" placeholder="Ask about budgets, timelines, staff ratios…" autocomplete="off" />
+        <button id="send-btn" class="btn" aria-label="Send message" type="button">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -367,7 +429,7 @@
       </div>
       
       <div id="menu-container">
-        <button id="start-over-btn" class="btn" onclick="resetConversation()">
+        <button id="start-over-btn" class="btn" aria-label="Reset conversation" type="button">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 2v6h6"></path>
             <path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path>
@@ -379,405 +441,250 @@
   </div>
 
   <script>
-    // Initialize with a welcome message
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(() => {
-        addBotMessage("👋 Hi there! I'm EventBot. I can help you find and plan events. What type of events are you interested in?");
-        
-        // Add suggestion chips
-        addSuggestionChips([
-          "Concerts nearby", 
-          "Tech conferences", 
-          "Weekend activities",
-          "Family events"
-        ]);
-      }, 500);
-    });
+    (function () {
+      const CHAT_MEMORY_KEY = "eventbot_memory";
+      const DEFAULT_SUGGESTIONS = [
+        "Budget for 120 guests in INR",
+        "Event planning timeline",
+        "How many staff for 200 people?",
+        "Create a basic event checklist"
+      ];
 
-    function addSuggestionChips(suggestions) {
-      const chipsContainer = document.createElement("div");
-      chipsContainer.className = "suggestion-chips";
-      
-      suggestions.forEach(text => {
-        const chip = document.createElement("div");
-        chip.className = "suggestion-chip";
-        chip.textContent = text;
-        chip.onclick = () => {
-          document.getElementById("user-input").value = text;
-          sendMessage();
-        };
-        chipsContainer.appendChild(chip);
-      });
-      
-      const lastBotMessage = document.querySelector(".bot-wrapper:last-child");
-      if (lastBotMessage) {
-        lastBotMessage.appendChild(chipsContainer);
-      }
-    }
-
-    function getCurrentTime() {
-      const now = new Date();
-      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function showTypingIndicator() {
-      const typingDiv = document.createElement("div");
-      typingDiv.id = "typing-indicator";
-      typingDiv.className = "typing-indicator";
-      
-      for (let i = 0; i < 3; i++) {
-        const dot = document.createElement("div");
-        dot.className = "typing-dot";
-        typingDiv.appendChild(dot);
-      }
-      
-      document.getElementById("chat-messages").appendChild(typingDiv);
-      scrollToBottom();
-    }
-
-    function removeTypingIndicator() {
-      const indicator = document.getElementById("typing-indicator");
-      if (indicator) {
-        indicator.remove();
-      }
-    }
-
-    function addUserMessage(text) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "message-wrapper user-wrapper";
-      
-      const avatar = document.createElement("div");
-      avatar.className = "avatar user-avatar";
-      avatar.textContent = "U";
-      
-      const messageContainer = document.createElement("div");
-      messageContainer.className = "message-container";
-      
-      const message = document.createElement("div");
-      message.className = "message user-message";
-      message.textContent = text;
-      
-      const timestamp = document.createElement("div");
-      timestamp.className = "timestamp";
-      timestamp.textContent = getCurrentTime();
-      
-      messageContainer.appendChild(message);
-      messageContainer.appendChild(timestamp);
-      
-      wrapper.appendChild(messageContainer);
-      wrapper.appendChild(avatar);
-      
-      document.getElementById("chat-messages").appendChild(wrapper);
-      scrollToBottom();
-    }
-
-    function addBotMessage(text) {
-      removeTypingIndicator();
-      
-      const wrapper = document.createElement("div");
-      wrapper.className = "message-wrapper bot-wrapper";
-      
-      const avatar = document.createElement("div");
-      avatar.className = "avatar bot-avatar";
-      avatar.textContent = "E";
-      
-      const messageContainer = document.createElement("div");
-      messageContainer.className = "message-container";
-      
-      const message = document.createElement("div");
-      message.className = "message bot-message";
-      message.textContent = text;
-      
-      const timestamp = document.createElement("div");
-      timestamp.className = "timestamp";
-      timestamp.textContent = getCurrentTime();
-      
-      messageContainer.appendChild(message);
-      messageContainer.appendChild(timestamp);
-      
-      wrapper.appendChild(avatar);
-      wrapper.appendChild(messageContainer);
-      
-      document.getElementById("chat-messages").appendChild(wrapper);
-      scrollToBottom();
-    }
-
-    function scrollToBottom() {
       const chatContainer = document.getElementById("chat-container");
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+      const chatMessages = document.getElementById("chat-messages");
+      const userInput = document.getElementById("user-input");
+      const sendBtn = document.getElementById("send-btn");
+      const resetBtn = document.getElementById("start-over-btn");
 
-    function sendMessage() {
-      const input = document.getElementById("user-input");
-      const query = input.value.trim();
-      if (!query) return;
-      
-      addUserMessage(query);
-      input.value = "";
-      
-      // Show typing indicator
-      showTypingIndicator();
-      
-      // Simulate API call with delay for demonstration
-      setTimeout(() => {
-        fetch("/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: query, user_id: "user123" })
-        })
-        .then(res => res.json())
-        .then(data => {
-          addBotMessage(data.response);
-          
-          // Add contextual suggestions based on response
-          if (data.suggestions) {
-            addSuggestionChips(data.suggestions);
-          }
-        })
-        .catch(error => {
+      function getCurrentTime() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+
+      function scrollToBottom(smooth = true) {
+        if (smooth) {
+          chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" });
+          return;
+        }
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function getMemory() {
+        try {
+          const raw = localStorage.getItem(CHAT_MEMORY_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(parsed)) return [];
+          return parsed;
+        } catch {
+          return [];
+        }
+      }
+
+      function setMemory(items) {
+        localStorage.setItem(CHAT_MEMORY_KEY, JSON.stringify(items));
+      }
+
+      function clearMemory() {
+        localStorage.removeItem(CHAT_MEMORY_KEY);
+      }
+
+      function createMessageElement({ sender, message, time }) {
+        const wrapper = document.createElement("div");
+        wrapper.className = `message-wrapper ${sender === "user" ? "user-wrapper" : "bot-wrapper"}`;
+
+        const avatar = document.createElement("div");
+        avatar.className = `avatar ${sender === "user" ? "user-avatar" : "bot-avatar"}`;
+        avatar.textContent = sender === "user" ? "U" : "E";
+
+        const column = document.createElement("div");
+        column.className = "message-column";
+
+        const bubble = document.createElement("div");
+        bubble.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
+        bubble.textContent = message;
+
+        const timestamp = document.createElement("div");
+        timestamp.className = "timestamp";
+        timestamp.textContent = time || getCurrentTime();
+
+        column.appendChild(bubble);
+        column.appendChild(timestamp);
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(column);
+
+        return { wrapper, column, bubble };
+      }
+
+      function addSuggestionChips(targetColumn, suggestions) {
+        if (!targetColumn || !Array.isArray(suggestions) || suggestions.length === 0) return;
+
+        const chipsContainer = document.createElement("div");
+        chipsContainer.className = "suggestion-chips";
+
+        suggestions.forEach((text) => {
+          const chip = document.createElement("div");
+          chip.className = "suggestion-chip";
+          chip.textContent = text;
+          chip.addEventListener("click", () => {
+            userInput.value = text;
+            userInput.focus();
+            sendMessage();
+          });
+          chipsContainer.appendChild(chip);
+        });
+
+        targetColumn.appendChild(chipsContainer);
+      }
+
+      function showTypingIndicator() {
+        removeTypingIndicator();
+
+        const wrapper = document.createElement("div");
+        wrapper.id = "typing-indicator";
+        wrapper.className = "message-wrapper bot-wrapper";
+
+        const avatar = document.createElement("div");
+        avatar.className = "avatar bot-avatar";
+        avatar.textContent = "E";
+
+        const column = document.createElement("div");
+        column.className = "message-column";
+
+        const typing = document.createElement("div");
+        typing.className = "typing-indicator";
+        for (let i = 0; i < 3; i++) {
+          const dot = document.createElement("div");
+          dot.className = "typing-dot";
+          typing.appendChild(dot);
+        }
+
+        column.appendChild(typing);
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(column);
+        chatMessages.appendChild(wrapper);
+        scrollToBottom(true);
+      }
+
+      function removeTypingIndicator() {
+        const indicator = document.getElementById("typing-indicator");
+        if (indicator) indicator.remove();
+      }
+
+      function addMessage({ sender, message, time }, { save = true, smoothScroll = true } = {}) {
+        const { wrapper, column } = createMessageElement({ sender, message, time });
+        chatMessages.appendChild(wrapper);
+        scrollToBottom(smoothScroll);
+
+        if (save) {
+          const memory = getMemory();
+          memory.push({ sender, message, time: time || getCurrentTime() });
+          setMemory(memory);
+        }
+
+        return column;
+      }
+
+      function renderFromMemory() {
+        chatMessages.innerHTML = "";
+        const memory = getMemory();
+        for (const item of memory) {
+          if (!item || !item.sender || typeof item.message !== "string") continue;
+          addMessage(
+            { sender: item.sender, message: item.message, time: item.time },
+            { save: false, smoothScroll: false }
+          );
+        }
+        scrollToBottom(false);
+        return memory.length > 0;
+      }
+
+      function renderWelcome() {
+        chatMessages.innerHTML = "";
+        const column = addMessage(
+          {
+            sender: "bot",
+            message: "Hi — I’m EventBot. Ask me about budgets, timelines, staffing, or checklists for your event.",
+            time: getCurrentTime()
+          },
+          { save: false, smoothScroll: false }
+        );
+        addSuggestionChips(column, DEFAULT_SUGGESTIONS);
+        scrollToBottom(false);
+      }
+
+      function setSending(isSending) {
+        sendBtn.disabled = isSending;
+        userInput.disabled = isSending;
+        sendBtn.style.opacity = isSending ? "0.65" : "1";
+      }
+
+      async function sendMessage() {
+        const query = userInput.value.trim();
+        if (!query) return;
+
+        const historyForApi = getMemory().map(({ sender, message }) => ({ sender, message }));
+
+        addMessage({ sender: "user", message: query, time: getCurrentTime() }, { save: true });
+        userInput.value = "";
+        userInput.focus();
+
+        setSending(true);
+        showTypingIndicator();
+
+        try {
+          const res = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query, history: historyForApi })
+          });
+
+          const data = await res.json();
           removeTypingIndicator();
-          addBotMessage("Sorry, I'm having trouble connecting right now. Please try again later.");
-        });
-      }, 1000); // Simulate network delay
-    }
+          addMessage(
+            { sender: "bot", message: (data && data.response) || "No response received.", time: getCurrentTime() },
+            { save: true }
+          );
+        } catch {
+          removeTypingIndicator();
+          addMessage(
+            {
+              sender: "bot",
+              message: "Sorry — I couldn’t reach the server. Please try again.",
+              time: getCurrentTime()
+            },
+            { save: false }
+          );
+        } finally {
+          setSending(false);
+        }
+      }
 
-    function resetConversation() {
-      document.getElementById("chat-messages").innerHTML = "";
-      
-      showTypingIndicator();
-      
-      setTimeout(() => {
-        fetch("/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: "start over", user_id: "user123" })
-        })
-        .then(res => res.json())
-        .then(data => {
-          addBotMessage("Let's start over! I'm EventBot. How can I help you find events today?");
-          addSuggestionChips([
-            "Concerts nearby", 
-            "Tech conferences", 
-            "Weekend activities",
-            "Family events"
-          ]);
-        });
-      }, 800);
-    }
+      function resetConversation() {
+        clearMemory();
+        renderWelcome();
+        userInput.value = "";
+        userInput.focus();
+      }
 
-    document.getElementById("user-input").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
-  <script>
-    const chatMessages = document.getElementById("chat-messages");
-    const userInput = document.getElementById("user-input");
-  
-    function appendMessage(message, sender = "bot", save = true) {
-      const wrapper = document.createElement("div");
-      wrapper.className = `message-wrapper ${sender}-wrapper`;
-  
-      const avatar = document.createElement("div");
-      avatar.className = `avatar ${sender}-avatar`;
-      avatar.textContent = sender === "bot" ? "E" : "U";
-  
-      const messageBubble = document.createElement("div");
-      messageBubble.className = `message ${sender}-message`;
-      messageBubble.textContent = message;
-  
-      const timestamp = document.createElement("div");
-      timestamp.className = "timestamp";
-      timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
-      wrapper.appendChild(avatar);
-      wrapper.appendChild(messageBubble);
-      wrapper.appendChild(timestamp);
-      chatMessages.appendChild(wrapper);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-  
-      if (save) saveToMemory(message, sender);
-    }
-  
-    function saveToMemory(message, sender) {
-      let chatMemory = JSON.parse(localStorage.getItem("eventbot_memory")) || [];
-      chatMemory.push({ sender, message });
-      localStorage.setItem("eventbot_memory", JSON.stringify(chatMemory));
-    }
-  
-    function loadMemory() {
-      const chatMemory = JSON.parse(localStorage.getItem("eventbot_memory")) || [];
-      chatMemory.forEach(({ sender, message }) => {
-        appendMessage(message, sender, false); // false so it doesn't get saved again
-      });
-    }
-  
-    function showTypingIndicator() {
-      const typing = document.createElement("div");
-      typing.className = "message-wrapper bot-wrapper typing-indicator-wrapper";
-      typing.id = "typing-indicator";
-      typing.innerHTML = `
-        <div class="avatar bot-avatar">E</div>
-        <div class="typing-indicator">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      `;
-      chatMessages.appendChild(typing);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-  
-    function removeTypingIndicator() {
-      const indicator = document.getElementById("typing-indicator");
-      if (indicator) indicator.remove();
-    }
-  
-    async function sendMessage() {
-  const query = userInput.value.trim();
-  if (!query) return;
-
-  appendMessage(query, "user");
-  userInput.value = "";
-  showTypingIndicator();
-
-  // Get memory from localStorage
-  const chatHistory = JSON.parse(localStorage.getItem("eventbot_memory")) || [];
-
-  // Add current query to the history
-  chatHistory.push({ sender: "user", message: query });
-
-  try {
-    const response = await fetch("/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        history: chatHistory,  // 👈 Sending full memory to backend
-        query: query
-      })
-    });
-    const data = await response.json();
-
-    removeTypingIndicator();
-    appendMessage(data.response, "bot");
-
-    // Add bot response to memory
-    chatHistory.push({ sender: "bot", message: data.response });
-    localStorage.setItem("eventbot_memory", JSON.stringify(chatHistory));
-  } catch (err) {
-    removeTypingIndicator();
-    appendMessage("Something went wrong. Please try again.", "bot");
-  }
-}
-
-  
-    function resetConversation() {
-      localStorage.removeItem("eventbot_memory");
-      chatMessages.innerHTML = "";
-      appendMessage("Hey there! I'm here to help you with event planning. What would you like to know?", "bot");
-    }
-  
-    userInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") sendMessage();
-    });
-  
-    // Load saved memory on page load
-    window.onload = loadMemory;
-  </script>
-  <script>
-  const chatMessages = document.getElementById("chat-messages");
-  const userInput = document.getElementById("user-input");
-
-  let history = [];
-
-  function getCurrentTime() {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-
-  function addMessage(message, sender) {
-    const wrapper = document.createElement("div");
-    wrapper.className = `message-wrapper ${sender === "user" ? "user-wrapper" : "bot-wrapper"}`;
-
-    const avatar = document.createElement("div");
-    avatar.className = `avatar ${sender === "user" ? "user-avatar" : "bot-avatar"}`;
-    avatar.textContent = sender === "user" ? "U" : "E";
-
-    const messageBubble = document.createElement("div");
-    messageBubble.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
-    messageBubble.innerText = message;
-
-    const timestamp = document.createElement("div");
-    timestamp.className = "timestamp";
-    timestamp.innerText = getCurrentTime();
-
-    wrapper.appendChild(avatar);
-    wrapper.appendChild(messageBubble);
-    wrapper.appendChild(timestamp);
-
-    chatMessages.appendChild(wrapper);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function showTypingIndicator() {
-    const typing = document.createElement("div");
-    typing.id = "typing-indicator";
-    typing.className = "typing-indicator bot-wrapper";
-
-    typing.innerHTML = `
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-    `;
-
-    chatMessages.appendChild(typing);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function removeTypingIndicator() {
-    const typing = document.getElementById("typing-indicator");
-    if (typing) typing.remove();
-  }
-
-  async function sendMessage() {
-    const message = userInput.value.trim();
-    if (!message) return;
-
-    addMessage(message, "user");
-    history.push({ sender: "user", message });
-
-    userInput.value = "";
-    showTypingIndicator();
-
-    try {
-      const res = await fetch("/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: message, history })
+      // Wire up events
+      sendBtn.addEventListener("click", sendMessage);
+      resetBtn.addEventListener("click", resetConversation);
+      userInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendMessage();
+        }
       });
 
-      const data = await res.json();
-      const botReply = data.response;
-      removeTypingIndicator();
-      addMessage(botReply, "bot");
-      history.push({ sender: "bot", message: botReply });
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        const hadHistory = renderFromMemory();
+        if (!hadHistory) renderWelcome();
+        userInput.focus();
+      });
+    })();
 
-    } catch (err) {
-      removeTypingIndicator();
-      addMessage("Something went wrong. Please try again.", "bot");
-    }
-  }
-
-  function resetConversation() {
-    chatMessages.innerHTML = "";
-    history = [];
-    userInput.value = "";
-  }
-
-  userInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") sendMessage();
-  });
-</script>
-
-  
+  </script>
 </body>
 </html>
